@@ -1,6 +1,5 @@
 package com.example.hw;
 
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -18,13 +17,12 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         switch (position) {
             case 0: return new HomeFragment();
             case 1: return new LearningFragment();
-            case 2: return new SummaryFragment();
-            default: return new HomeFragment();
+            default: return new HomeFragment(); // fallback 頁面
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2; // 僅保留 2 個頁面
     }
 }

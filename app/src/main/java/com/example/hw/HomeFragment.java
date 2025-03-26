@@ -1,6 +1,5 @@
 package com.example.hw;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,10 +38,13 @@ public class HomeFragment extends Fragment {
 
         btnSetGoal.setOnClickListener(v -> {
             long startTime = System.currentTimeMillis();
-            preferences.edit().putLong("startTime", startTime).apply();
+            preferences.edit()
+                    .putLong("startTime", startTime)
+                    .putLong("totalStudyMillis", 0)
+                    .apply();
             Toast.makeText(getActivity(), "已開始學習", Toast.LENGTH_SHORT).show();
             if (pagerController != null) {
-                pagerController.goToPage(1); // 自動切到學習頁面
+                pagerController.goToPage(1); // 直接跳轉到學習頁
             }
         });
 
@@ -63,7 +65,11 @@ public class HomeFragment extends Fragment {
                         if (which == 3) {
                             showCustomGoalDialog();
                         } else {
-                            preferences.edit().putString("goal", goals[which]).apply();
+                            preferences.edit()
+                                    .putString("goal", goals[which])
+                                    .putLong("startTime", System.currentTimeMillis())
+                                    .putLong("totalStudyMillis", 0)
+                                    .apply();
                             Toast.makeText(getActivity(), "你選擇了：" + goals[which], Toast.LENGTH_SHORT).show();
                         }
                     }).show();
@@ -82,7 +88,11 @@ public class HomeFragment extends Fragment {
                 .setPositiveButton("儲存", (dialog, which) -> {
                     String customGoal = input.getText().toString().trim();
                     if (!customGoal.isEmpty()) {
-                        preferences.edit().putString("goal", customGoal).apply();
+                        preferences.edit()
+                                .putString("goal", customGoal)
+                                .putLong("startTime", System.currentTimeMillis())
+                                .putLong("totalStudyMillis", 0)
+                                .apply();
                         Toast.makeText(getActivity(), "已儲存自訂目標：" + customGoal, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity(), "請輸入目標內容！", Toast.LENGTH_SHORT).show();
